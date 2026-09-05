@@ -1,0 +1,12 @@
+<!doctype html><html lang="ar" dir="rtl"><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>مولد QR - كافتريا التكل</title>
+<style>body{font-family:Tahoma;text-align:center;background:#f4ead8;padding:30px;color:#2b1b12}input{width:min(700px,95%);padding:14px;border-radius:10px;border:1px solid #b78736}button{padding:13px 22px;margin:12px;border:0;border-radius:999px;background:#4a2b15;color:#fff;font-weight:bold}#qr{margin:20px auto}</style>
+<h1>QR كافتريا التكل</h1><p>ضع رابط الموقع المنشور ثم أنشئ رمز QR.</p>
+<input id="url" placeholder="https://...">
+<br><button onclick="makeQR()">إنشاء QR</button><div id="qr"></div>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script>
+function makeQR(){const u=document.getElementById('url').value.trim();if(!u)return alert('أدخل رابط الموقع أولاً');
+document.getElementById('qr').innerHTML='';new QRCode(document.getElementById('qr'),{text:u,width:280,height:280,colorDark:'#24170f',colorLight:'#fff',correctLevel:QRCode.CorrectLevel.H});}
+</script>
