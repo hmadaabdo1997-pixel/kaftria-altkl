@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>كافتريا التكل - عالم المذاق الأصيل</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Cairo & Tajawal -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#fffbeb',
+                            100: '#fef3c7',
+                            500: '#d97706',
+                            600: '#b45309',
+                            800: '#78350f',
+                            900: '#451a03',
+                            burgundy: '#581c87',
+                            darkGold: '#c59b27',
+                            amberDark: '#92400e'
+                        }
+                    },
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif'],
+                        tajawal: ['Tajawal', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Cairo', 'Tajawal', sans-serif;
+            background-color: #faf7f2;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(217, 119, 6, 0.15);
+        }
+        .custom-shadow {
+            box-shadow: 0 10px 30px -5px rgba(120, 53, 15, 0.08);
+        }
+        .active-tab {
+            background: linear-gradient(135deg, #78350f 0%, #b45309 100%);
+            color: #ffffff !important;
+            box-shadow: 0 4px 15px rgba(180, 83, 9, 0.35);
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d97706;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="text-gray-800 pb-24 antialiased selection:bg-amber-200 selection:text-amber-900">
+
+    <!-- Header / Hero Section -->
+    <header class="relative bg-gradient-to-br from-brand-900 via-brand-800 to-amber-950 text-amber-50 overflow-hidden shadow-xl">
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        
+        <div class="max-w-5xl mx-auto px-4 py-10 md:py-14 text-center relative z-10">
+            <!-- Logo & Brand Header -->
+            <div class="inline-flex items-center justify-center p-3 bg-white/10 backdrop-blur-md rounded-full mb-4 border border-amber-400/30 shadow-inner">
+                <i class="fa-solid font-bold fa-utensils text-2xl md:text-3xl text-amber-400 px-2"></i>
+            </div>
+            
+            <h1 class="text-4xl md:text-6xl font-extrabold tracking-wide text-amber-100 mb-2 font-cairo">
+                كافتريا التّكُل
+            </h1>
+            <p class="text-amber-200/90 text-lg md:text-xl font-medium tracking-wide max-w-md mx-auto mb-6">
+                أهلاً بكم في عالم المذاق الأصيل ✨
+            </p>
+
+            <!-- Search & Info Bar -->
+            <div class="max-w-md mx-auto relative px-2">
+                <div class="relative flex items-center">
+                    <input type="text" id="searchInput" oninput="filterItems()" placeholder="إبحث عن وجبتك أو مشروبك المفضّل..." 
+                        class="w-full py-3.5 pr-11 pl-4 bg-white/95 text-gray-800 placeholder-gray-400 rounded-full text-sm font-medium focus:outline-none focus:ring-4 focus:ring-amber-400/50 shadow-lg transition duration-200">
+                    <i class="fa-solid fa-magnifying-glass absolute right-4 text-amber-700 text-lg"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Decorative Bottom Curve -->
+        <div class="h-6 bg-[#faf7f2] rounded-t-3xl border-t border-amber-900/10"></div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 mt-2">
+        <!-- Category Tabs Nav -->
+        <section class="sticky top-2 z-30 mb-8 py-2 bg-[#faf7f2]/90 backdrop-blur-md">
+            <div class="flex items-center space-x-2 space-x-reverse overflow-x-auto no-scrollbar pb-2 pt-1 px-1" id="categoryTabs">
+                <button onclick="selectCategory('all')" id="tab-all" class="category-btn active-tab whitespace-nowrap px-5 py-2.5 rounded-full text-sm font-bold transition-all duration-200 flex items-center gap-2">
+                    <i class="fa-solid fa-border-all"></i> الكل
+                </button>
+                <button onclick="selectCategory('sandwiches')" id="tab-sandwiches" class="category-btn bg-white text-gray-700 hover:bg-amber-50 border border-amber-900/10 whitespace-nowrap px-5 py-2.5 rounded-full text-sm font-bold transition-all duration-200 flex items-center gap-2">
+                    <i class="fa-solid fa-burger text-amber-600"></i> السندوتشات
+                </button>
+                <button onclick="selectCategory('shamiya')" id="tab-shamiya" class="category-btn bg-white text-gray-700 hover:bg-amber-50 border border-amber-900/10 whitespace-nowrap px-5 py-2.5 rounded-full text-sm font-bold transition-all duration-200 flex items-center gap-2">
+                    <i class="fa-solid fa-bread-slice text-amber-600"></i> الفطائر الشامية
+                </button>
+                <button onclick="selectCategory('pizza')" id="tab-pizza" class="category-btn bg-white text-gray-700 hover:bg-amber-50 border border-amber-900/10 whitespace-nowrap px-5 py-2.5 rounded-full text-sm font-bold transition-all duration-200 flex items-center gap-2">
+                    <i class="fa-solid fa-pizza-slice text-amber-600"></i> البيتزا
+                </button>
+                <button onclick="selectCategory('juices')" id="tab-juices" class="category-btn bg-white text-gray-700 hover:bg-amber-50 border border-amber-900/10 whitespace-nowrap px-5 py-2.5 rounded-full text-sm font-bold transition-all duration-200 flex items-center gap-2">
+                    <i class="fa-solid fa-glass-water text-amber-600"></i> العصائر
+                </button>
+                <button onclick="selectCategory('hotdrinks')" id="tab-hotdrinks" class="category-btn bg-white text-gray-700 hover:bg-amber-50 border border-amber-900/10 whitespace-nowrap px-5 py-2.5 rounded-full text-sm font-bold transition-all duration-200 flex items-center gap-2">
+                    <i class="fa-solid fa-mug-hot text-amber-600"></i> مشروبات ساخنة
+                </button>
+                <button onclick="selectCategory('meals')" id="tab-meals" class="category-btn bg-white text-gray-700 hover:bg-amber-50 border border-amber-900/10 whitespace-nowrap px-5 py-2.5 rounded-full text-sm font-bold transition-all duration-200 flex items-center gap-2">
+                    <i class="fa-solid fa-bowl-rice text-amber-600"></i> الطلبات
+                </button>
+            </div>
+        </section>
+
+        <!-- Menu Items Display Grid -->
+        <div id="menuGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+            <!-- Items rendered dynamically via JavaScript -->
+        </div>
+
+        <!-- Empty Search State -->
+        <div id="emptyState" class="hidden text-center py-16">
+            <i class="fa-solid fa-utensils text-5xl text-amber-300 mb-4"></i>
+            <h3 class="text-xl font-bold text-gray-700">لم نجد أصنافاً تطابق بحثك</h3>
+            <p class="text-gray-500 text-sm mt-1">جرب البحث بكلمة أخرى أو اختر تصنيفاً آخر</p>
+        </div>
+    </main>
+
+    <!-- Floating Order Summary / Cart Widget -->
+    <div id="cartBar" class="fixed bottom-4 left-4 right-4 max-w-lg mx-auto z-40 transform translate-y-32 transition-transform duration-300">
+        <div class="bg-gradient-to-r from-brand-900 to-amber-900 text-white p-4 rounded-2xl shadow-2xl flex items-center justify-between border border-amber-400/30">
+            <div class="flex items-center gap-3">
+                <div class="relative bg-amber-500/30 p-3 rounded-xl border border-amber-400/30">
+                    <i class="fa-solid fa-basket-shopping text-amber-300 text-xl"></i>
+                    <span id="cartBadge" class="absolute -top-2 -right-2 bg-amber-400 text-brand-900 font-extrabold text-xs w-6 h-6 rounded-full flex items-center justify-center border-2 border-brand-900">0</span>
+                </div>
+                <div>
+                    <p class="text-xs text-amber-200/80">إجمالي الطلب المقدر</p>
+                    <p class="font-extrabold text-lg text-amber-300" id="cartTotal">0 SDG</p>
+                </div>
+            </div>
+            <button onclick="toggleCartModal()" class="bg-amber-400 hover:bg-amber-300 text-brand-900 font-bold px-5 py-2.5 rounded-xl text-sm transition-colors flex items-center gap-2 shadow-md">
+                <span>عرض السلة</span>
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Order Modal -->
+    <div id="cartModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4 transition-opacity">
+        <div class="bg-white w-full max-w-md rounded-t-3xl sm:rounded-3xl overflow-hidden shadow-2xl flex flex-col max-h-[85vh] animate-slide-up">
+            <!-- Modal Header -->
+            <div class="bg-brand-900 text-white p-4 px-6 flex justify-between items-center">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-receipt text-amber-400"></i>
+                    <h3 class="font-bold text-lg">تفاصيل الطلب</h3>
+                </div>
+                <button onclick="toggleCartModal()" class="text-amber-200 hover:text-white text-xl">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Items List -->
+            <div id="cartItemsList" class="p-4 overflow-y-auto space-y-3 flex-grow divide-y divide-gray-100">
+                <!-- Cart Items Inserted Here -->
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="p-4 bg-gray-50 border-t border-gray-100 space-y-3">
+                <div class="flex justify-between items-center text-sm font-bold text-gray-700">
+                    <span>المجموع الكلي:</span>
+                    <span id="modalTotal" class="text-xl text-amber-700">0 SDG</span>
+                </div>
+                <button onclick="sendOrderWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 text-sm shadow-md transition-colors">
+                    <i class="fa-brands fa-whatsapp text-lg"></i>
+                    إرسال الطلب عبر الواتساب
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Menu Items Data
+        const menuData = [
+            // السندوتشات
+            { id: 1, name: "برجر عادي", price: 10000, category: "sandwiches", icon: "fa-burger" },
+            { id: 2, name: "برجر جامبو", price: 12000, category: "sandwiches", icon: "fa-burger" },
+            { id: 3, name: "طعيمة عيش", price: 3500, category: "sandwiches", icon: "fa-cookie-bite" },
+            { id: 4, name: "طعيمة فطيرة", price: 4000, category: "sandwiches", icon: "fa-cookie-bite" },
+            { id: 5, name: "طعيمة جامبو", price: 7000, category: "sandwiches", icon: "fa-cookie-bite" },
+            { id: 6, name: "بيض بالطماطم", price: 5000, category: "sandwiches", icon: "fa-egg" },
+            { id: 7, name: "طعيمة شيبس", price: 5000, category: "sandwiches", icon: "fa-cookie-bite" },
+            { id: 8, name: "شيبس", price: 5000, category: "sandwiches", icon: "fa-box-archive" },
+            { id: 9, name: "شاورما", price: 11000, category: "sandwiches", icon: "fa-bread-slice" },
+            { id: 10, name: "كبدة", price: 7000, category: "sandwiches", icon: "fa-utensils" },
+            { id: 11, name: "شيش طاووق", price: 8000, category: "sandwiches", icon: "fa-drumstick-bite" },
+            { id: 12, name: "كريسبي", price: 13000, category: "sandwiches", icon: "fa-drumstick-bite" },
+
+            // الفطائر الشامية
+            { id: 13, name: "فطيرة هوت دوق", price: 12000, category: "shamiya", icon: "fa-hotdog" },
+            { id: 14, name: "فطيرة فراخ", price: 13000, category: "shamiya", icon: "fa-drumstick-bite" },
+            { id: 15, name: "فطيرة خضار", price: 11000, category: "shamiya", icon: "fa-carrot" },
+
+            // البيتزا
+            { id: 16, name: "بيتزا كبيرة", price: 27000, category: "pizza", icon: "fa-pizza-slice" },
+            { id: 17, name: "بيتزا وسط", price: 24000, category: "pizza", icon: "fa-pizza-slice" },
+            { id: 18, name: "بيتزا صغيرة", price: 22000, category: "pizza", icon: "fa-pizza-slice" },
+
+            // العصائر
+            { id: 19, name: "عصير مانجو", price: 8000, category: "juices", icon: "fa-glass-water" },
+            { id: 20, name: "عصير فراولة", price: 10000, category: "juices", icon: "fa-glass-water" },
+            { id: 21, name: "عصير برتقال", price: 5000, category: "juices", icon: "fa-glass-water" },
+            { id: 22, name: "عصير مشكل", price: 6000, category: "juices", icon: "fa-glass-water" },
+            { id: 23, name: "ليمون نعناع", price: 4000, category: "juices", icon: "fa-glass-water" },
+            { id: 24, name: "مياه غازية", price: 4000, category: "juices", icon: "fa-bottle-water" },
+            { id: 25, name: "مياه معدنية كبيرة", price: 3000, category: "juices", icon: "fa-bottle-water" },
+            { id: 26, name: "مياه معدنية صغيرة", price: 2000, category: "juices", icon: "fa-bottle-water" },
+
+            // المشروبات الساخنة
+            { id: 27, name: "قهوة", price: 3000, category: "hotdrinks", icon: "fa-mug-hot" },
+            { id: 28, name: "شاي", price: 2000, category: "hotdrinks", icon: "fa-mug-saucer" },
+            { id: 29, name: "نسكافيه", price: 4000, category: "hotdrinks", icon: "fa-mug-hot" },
+
+            // الطلبات
+            { id: 30, name: "صحن فول", price: 7000, category: "meals", icon: "fa-bowl-rice" },
+            { id: 31, name: "فتة فول", price: 1500, category: "meals", icon: "fa-bowl-rice" },
+            { id: 32, name: "إندومي", price: 4000, category: "meals", icon: "fa-bowl-food" }
+        ];
+
+        let currentCategory = 'all';
+        let cart = {};
+
+        // Render Cards
+        function renderMenu() {
+            const grid = document.getElementById('menuGrid');
+            const searchVal = document.getElementById('searchInput').value.trim().toLowerCase();
+            grid.innerHTML = '';
+
+            const filtered = menuData.filter(item => {
+                const matchesCategory = currentCategory === 'all' || item.category === currentCategory;
+                const matchesSearch = item.name.toLowerCase().includes(searchVal);
+                return matchesCategory && matchesSearch;
+            });
+
+            const emptyState = document.getElementById('emptyState');
+            if (filtered.length === 0) {
+                emptyState.classList.remove('hidden');
+            } else {
+                emptyState.classList.add('hidden');
+            }
+
+            filtered.forEach(item => {
+                const count = cart[item.id] || 0;
+                const card = document.createElement('div');
+                card.className = "glass-card rounded-2xl p-4 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:shadow-xl custom-shadow border border-amber-900/10";
+                
+                card.innerHTML = `
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <div class="w-11 h-11 bg-amber-100/70 text-amber-800 rounded-xl flex items-center justify-center text-xl shadow-sm">
+                                <i class="fa-solid ${item.icon}"></i>
+                            </div>
+                            <span class="text-xs font-bold px-2.5 py-1 bg-amber-500/10 text-amber-800 rounded-full border border-amber-500/20">
+                                ${getCategoryName(item.category)}
+                            </span>
+                        </div>
+                        <h3 class="font-extrabold text-gray-800 text-lg mb-1">${item.name}</h3>
+                        <p class="text-amber-700 font-extrabold text-base mb-4">${item.price.toLocaleString()} <span class="text-xs text-amber-800/70">SDG</span></p>
+                    </div>
+
+                    <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                        <span class="text-xs font-semibold text-gray-500">الكمية المختارة</span>
+                        <div class="flex items-center gap-2">
+                            ${count > 0 ? `
+                                <button onclick="updateCart(${item.id}, -1)" class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold flex items-center justify-center transition-colors">
+                                    <i class="fa-solid fa-minus text-xs"></i>
+                                </button>
+                                <span class="font-bold text-gray-800 w-5 text-center text-sm">${count}</span>
+                            ` : ''}
+                            <button onclick="updateCart(${item.id}, 1)" class="w-8 h-8 rounded-lg bg-amber-600 hover:bg-amber-700 text-white font-bold flex items-center justify-center shadow-md transition-colors">
+                                <i class="fa-solid fa-plus text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function getCategoryName(cat) {
+            const names = {
+                sandwiches: "سندوتش",
+                shamiya: "فطائر شامية",
+                pizza: "بيتزا",
+                juices: "عصائر ومشروبات",
+                hotdrinks: "مشروبات ساخنة",
+                meals: "طلبات"
+            };
+            return names[cat] || "";
+        }
+
+        function selectCategory(category) {
+            currentCategory = category;
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active-tab');
+                btn.classList.add('bg-white', 'text-gray-700');
+            });
+            const activeBtn = document.getElementById(`tab-${category}`);
+            if (activeBtn) {
+                activeBtn.classList.add('active-tab');
+                activeBtn.classList.remove('bg-white', 'text-gray-700');
+            }
+            renderMenu();
+        }
+
+        function filterItems() {
+            renderMenu();
+        }
+
+        function updateCart(itemId, change) {
+            if (!cart[itemId]) cart[itemId] = 0;
+            cart[itemId] += change;
+
+            if (cart[itemId] <= 0) {
+                delete cart[itemId];
+            }
+
+            updateCartUI();
+            renderMenu();
+        }
+
+        function updateCartUI() {
+            let totalCount = 0;
+            let totalPrice = 0;
+
+            Object.keys(cart).forEach(id => {
+                const item = menuData.find(m => m.id == id);
+                if (item) {
+                    totalCount += cart[id];
+                    totalPrice += item.price * cart[id];
+                }
+            });
+
+            document.getElementById('cartBadge').innerText = totalCount;
+            document.getElementById('cartTotal').innerText = `${totalPrice.toLocaleString()} SDG`;
+            document.getElementById('modalTotal').innerText = `${totalPrice.toLocaleString()} SDG`;
+
+            const cartBar = document.getElementById('cartBar');
+            if (totalCount > 0) {
+                cartBar.classList.remove('translate-y-32');
+            } else {
+                cartBar.classList.add('translate-y-32');
+                document.getElementById('cartModal').classList.add('hidden');
+            }
+        }
+
+        function toggleCartModal() {
+            const modal = document.getElementById('cartModal');
+            if (modal.classList.contains('hidden')) {
+                renderCartItems();
+                modal.classList.remove('hidden');
+            } else {
+                modal.classList.add('hidden');
+            }
+        }
+
+        function renderCartItems() {
+            const container = document.getElementById('cartItemsList');
+            container.innerHTML = '';
+
+            const keys = Object.keys(cart);
+            if (keys.length === 0) {
+                container.innerHTML = '<p class="text-center text-gray-500 py-6">السلة فارغة</p>';
+                return;
+            }
+
+            keys.forEach(id => {
+                const item = menuData.find(m => m.id == id);
+                const count = cart[id];
+                const div = document.createElement('div');
+                div.className = "flex justify-between items-center pt-3 first:pt-0";
+                div.innerHTML = `
+                    <div>
+                        <h4 class="font-bold text-gray-800 text-sm">${item.name}</h4>
+                        <p class="text-xs text-amber-700 font-semibold">${(item.price * count).toLocaleString()} SDG</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="updateCart(${item.id}, -1)" class="w-7 h-7 rounded bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-bold flex items-center justify-center">
+                            <i class="fa-solid fa-minus"></i>
+                        </button>
+                        <span class="font-bold text-gray-800 text-xs w-4 text-center">${count}</span>
+                        <button onclick="updateCart(${item.id}, 1)" class="w-7 h-7 rounded bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold flex items-center justify-center">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function sendOrderWhatsApp() {
+            let message = "أهلاً كافتريا التكل، أرغب في طلب الاتي:\n\n";
+            let total = 0;
+
+            Object.keys(cart).forEach(id => {
+                const item = menuData.find(m => m.id == id);
+                const itemTotal = item.price * cart[id];
+                total += itemTotal;
+                message += `• ${item.name} (العدد: ${cart[id]}) - ${itemTotal.toLocaleString()} SDG\n`;
+            });
+
+            message += `\n*المجموع الكلي: ${total.toLocaleString()} SDG*`;
+            
+            // Encode message for WhatsApp URL
+            const url = `https://wa.me/?text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank');
+        }
+
+        // Initial Load
+        window.onload = () => {
+            renderMenu();
+        };
+    </script>
+</body>
+</html>
